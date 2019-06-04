@@ -13,7 +13,7 @@ from keras.models import Model
 from keras import regularizers
 
 from keras.optimizers import SGD, Adam
-from keras.utils.training_utils import multi_gpu_model
+from keras.utils import multi_gpu_model
 
 
 def gn_block(input, num_c=64, kernel_size=(3,3), strides=(1,1), padding='SAME', activation='relu', dropout=None, regularizer=0.01):
@@ -55,6 +55,7 @@ class BaseModel():
         self.scale = args.scale
         self.input_shape = input_shape
         self._model = self.build_model(input_shape, args)
+        self.args.num_gpu = 1
         if self.args.num_gpu < 2:
             self.model = self._model
         else:
@@ -72,7 +73,9 @@ class BaseModel():
         self.tf_graph_dir = './tfgraph/'+self.model_name+'/'
         self.tb_hist = keras.callbacks.TensorBoard(log_dir=self.tf_graph_dir, histogram_freq=0, write_graph=True, write_images=True)
         self.early_stopping = keras.callbacks.EarlyStopping(monitor='val_loss', min_delta=0, patience=patience, verbose=0, mode=es)
-
+        ###
+        # mode = min 表示停止下降的时候停止训练
+        # min_delta 表示提升相差的最小值，超过该值，才可以认为是上升
         self.check_point = keras.callbacks.ModelCheckpoint(self.tf_graph_dir+'wegihts.{epoch:02d}-{val_loss:.2f}.hdf5', monitor='val_loss', verbose=2, save_best_only=True)
 
     def load_model(self, save_model_name, save_dir='./model_saved', best=False):

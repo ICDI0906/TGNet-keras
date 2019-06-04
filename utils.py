@@ -7,7 +7,7 @@ import keras
 import keras.backend as K
 import random
 
-def data_loader(dir='/data/project/rw/kakao_dataset', train=True, valid=False,\
+def data_loader(dir='/data/project/rw/kakao_dataset', train=True, valid=False,
                 scale='log', valid_ratio=0.2, coord=25.0):
     """
     After load train(test) data in dir, preprocess and return the inputs and ouput of model.

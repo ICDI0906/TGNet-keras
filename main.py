@@ -1,7 +1,8 @@
 import numpy as np
 import random
 import tensorflow as tf
-
+import sys
+sys.path.append('../')
 from models.TGNet_NYC import TGNet
 
 RANDOM_SEED = 42
@@ -26,7 +27,7 @@ if __name__ == "__main__":
     parser.add_argument('--model_name', type=str, default='no_named')
 
     parser.add_argument('--scale', type=str, default='min_max')
-    parser.add_argument('--dataset_name', type=str, default='NYC')
+    parser.add_argument('--dataset_name', type=str, default='NYCB')
     parser.add_argument('--thr', type=int, default=10)
     parser.add_argument('--alpha', type=float, default=0.05)
     parser.add_argument('--num_gpu', type=int, default=2)
@@ -43,10 +44,10 @@ if __name__ == "__main__":
 
     if args.dataset_name == 'NYC':
         input_shape = [10, 20, 8]
-        args.dataset = './datasets/NYC_taxi/'
+        args.dataset = '/data/zks/TGNet/NYC_taxi/'
     elif args.dataset_name == 'NYCB':
         input_shape = [10, 20, 8]
-        args.dataset = './datasets/NYC_bike/'
+        args.dataset = '/data/zks/TGNet/NYC_bike/'
     else:
       raise IOError(repr("Set args.dataset"))
 

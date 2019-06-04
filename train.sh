@@ -1,0 +1,1 @@
+~/anaconda3/bin/python main.py --model_name hh --num_gpu 1 --dataset_name NYCB --alpha 0.01
